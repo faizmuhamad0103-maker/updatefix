@@ -39,7 +39,7 @@ export default function TransactionCard({
           </p>
 
           <p className="text-xs text-slate-500">
-            {new Date(transaction.date).toLocaleDateString("id-ID", {
+            {new Date(transaction.date).toLocaleDateString("de-DE", {
               day: "2-digit",
               month: "short",
               year: "numeric",
@@ -61,8 +61,8 @@ export default function TransactionCard({
             isIncome ? "text-emerald-600" : "text-rose-600"
           }`}
         >
-          {isIncome ? "+" : "-"}Rp{" "}
-          {transaction.amount.toLocaleString("id-ID")}
+          {isIncome ? "+" : "-"}€{" "}
+          {transaction.amount.toLocaleString("de-DE")}
         </span>
 
       </div>

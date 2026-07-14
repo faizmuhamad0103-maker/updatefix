@@ -3,7 +3,7 @@
 import { Wallet, CalendarDays } from "lucide-react";
 
 export default function Header() {
-  const today = new Date().toLocaleDateString("id-ID", {
+  const today = new Date().toLocaleDateString("de-DE", {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -17,9 +17,7 @@ export default function Header() {
 
         <div className="glass ambient-shadow p-8 rounded-xl flex flex-col items-center text-center space-y-2 transform transition-transform active:scale-[0.98]">
           <p className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">
-
-            ayangg harus nyatet setiap pengeluaran dan pemasukan meskipun itu cuman 1 cent,
-            tapi ini aku tulis pake format rupiah yaa, biar keliatan banyak hehehe, biar ayang semangat nabung😘.
+          buat nyatet keuangan.
           </p>
 
         </div>

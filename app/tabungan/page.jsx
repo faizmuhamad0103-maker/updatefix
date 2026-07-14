@@ -48,7 +48,7 @@ export default function Tabungan() {
 
       <div className="card" style={{ marginBottom: '32px', textAlign: 'center', background: 'linear-gradient(135deg, var(--accent), var(--primary))', color: 'white' }}>
         <h2 style={{ fontSize: '1.2rem', fontWeight: '500', opacity: 0.9 }}>Total Tabungan Saat Ini</h2>
-        <p style={{ fontSize: '2.5rem', fontWeight: '800', margin: '10px 0' }}>Rp {currentTotal.toLocaleString("id-ID")}</p>
+        <p style={{ fontSize: '2.5rem', fontWeight: '800', margin: '10px 0' }}>€ {currentTotal.toLocaleString("de-DE")}</p>
       </div>
 
       <div style={{ overflowY: 'auto', maxHeight: '450px', marginBottom: '15px'}}>
@@ -79,11 +79,11 @@ export default function Tabungan() {
                 <div key={item.id} className="glass" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <p style={{ fontWeight: '600' }}>{item.description}</p>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>{new Date(item.date).toLocaleDateString("id-ID")}</p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>{new Date(item.date).toLocaleDateString("de-DE")}</p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                     <p style={{ fontWeight: 'bold', color: item.type === "deposit" ? 'var(--green)' : 'var(--red)' }}>
-                      {item.type === "deposit" ? '+' : '-'} Rp {item.amount.toLocaleString("id-ID")}
+                      {item.type === "deposit" ? '+' : '-'} € {item.amount.toLocaleString("de-DE")}
                     </p>
                     <button onClick={() => deleteSaving(item.id)} style={{ background: 'transparent', color: 'var(--red)', fontSize: '0.9rem', padding: '5px' }}>Hapus</button>
                   </div>

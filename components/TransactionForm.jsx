@@ -27,7 +27,7 @@ export default function TransactionForm({
   }
 
   const formattedAmount = form.amount
-    ? Number(form.amount).toLocaleString("id-ID")
+    ? Number(form.amount).toLocaleString("de-DE")
     : "";
 
   return (

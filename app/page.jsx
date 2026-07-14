@@ -95,17 +95,17 @@ export default function Home() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginTop: '32px', marginBottom: '32px' }}>
         <SummaryCard
           title="Saldo"
-          amount={`Rp ${balance.toLocaleString("id-ID")}`}
+          amount={`€ ${balance.toLocaleString("de-DE")}`}
           color="var(--primary)"
         />
         <SummaryCard
           title="Pemasukan"
-          amount={`Rp ${income.toLocaleString("id-ID")}`}
+          amount={`€ ${income.toLocaleString("de-DE")}`}
           color="var(--green)"
         />
         <SummaryCard
           title="Pengeluaran"
-          amount={`Rp ${expense.toLocaleString("id-ID")}`}
+          amount={`€ ${expense.toLocaleString("de-DE")}`}
           color="var(--red)"
         />
         <SummaryCard

@@ -22,7 +22,7 @@ export default function TransactionRow({
 
         <div className="font-medium">
           {new Date(transaction.date).toLocaleDateString(
-            "id-ID",
+            "de-DE",
             {
               day: "2-digit",
               month: "short",
@@ -54,7 +54,7 @@ export default function TransactionRow({
       <td className="text-right font-semibold text-emerald-600">
 
         {income > 0
-          ? income.toLocaleString("id-ID", {
+          ? income.toLocaleString("de-DE", {
               style: "currency",
               currency: "IDR",
               maximumFractionDigits: 0,
@@ -66,7 +66,7 @@ export default function TransactionRow({
       <td className="text-right font-semibold text-rose-500">
 
         {expense > 0
-          ? expense.toLocaleString("id-ID", {
+          ? expense.toLocaleString("de-DE", {
               style: "currency",
               currency: "IDR",
               maximumFractionDigits: 0,
@@ -77,7 +77,7 @@ export default function TransactionRow({
 
       <td className="text-right font-bold text-sky-700">
 
-        {transaction.amount.toLocaleString("id-ID", {
+        {transaction.amount.toLocaleString("de-DE", {
           style: "currency",
           currency: "IDR",
           maximumFractionDigits: 0,
