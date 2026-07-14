@@ -31,31 +31,36 @@ export default function Home() {
 
   const transactions = useLiveQuery(() => getTransactions(), []) || [];
 
-  async function saveTransaction() {
-    if (!form.date || !form.description || !form.amount) {
-      return;
-    }
-
-    const payload = {
-      ...form,
-      amount: Number(form.amount)
-    };
-
-    if (editingId) {
-      await updateTransaction(editingId, payload);
-      setEditingId(null);
-    } else {
-      await addTransaction(payload);
-    }
-
-    setForm({
-      date: "",
-      description: "",
-      category: "Makanan",
-      type: "expense",
-      amount: ""
-    });
+ async function saveTransaction() {
+  if (!form.date || !form.description || !form.amount) {
+    return;
   }
+
+  const payload = {
+    ...form,
+    amount: Number(String(form.amount).replace(",", "."))
+  };
+
+  if (Number.isNaN(payload.amount)) {
+    alert("Nominal tidak valid");
+    return;
+  }
+
+  if (editingId) {
+    await updateTransaction(editingId, payload);
+    setEditingId(null);
+  } else {
+    await addTransaction(payload);
+  }
+
+  setForm({
+    date: "",
+    description: "",
+    category: "Makanan",
+    type: "expense",
+    amount: ""
+  });
+}
 
   async function deleteTransaction(id) {
     if (!confirm("Hapus transaksi?")) {
@@ -71,7 +76,7 @@ export default function Home() {
       description: item.description,
       category: item.category,
       type: item.type,
-      amount: item.amount
+      amount: String(item.amount).replace(".", ",")
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }

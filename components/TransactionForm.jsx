@@ -6,29 +6,29 @@ export default function TransactionForm({
   saveTransaction,
   editingId,
 }) {
-  function handleChange(e) {
-    const { name, value } = e.target;
+function handleChange(e) {
+  const { name, value } = e.target;
 
-    if (name === "amount") {
-      const number = value.replace(/\D/g, "");
-
-      setForm((prev) => ({
-        ...prev,
-        amount: number,
-      }));
-
-      return;
-    }
+  if (name === "amount") {
+    // Hanya angka, koma, dan titik
+    if (!/^[0-9.,]*$/.test(value)) return;
 
     setForm((prev) => ({
       ...prev,
-      [name]: value,
+      amount: value,
     }));
+
+    return;
   }
 
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+}
+
   const formattedAmount = form.amount
-    ? Number(form.amount).toLocaleString("de-DE")
-    : "";
+   
 
   return (
     <section className="card mt-8">
@@ -85,15 +85,14 @@ export default function TransactionForm({
             Keterangan
           </label>
 
-          <input
-            type="text"
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            placeholder="Contoh : Gaji Bulanan"
-            className="w-full"
-          />
-
+         <input
+  type="text"
+  name="description"
+  value={form.description}
+  onChange={handleChange}
+  placeholder="Contoh: Gaji Bulanan"
+  className="w-full"
+/>
         </div>
 
         <div className="space-y-2">
@@ -155,15 +154,14 @@ export default function TransactionForm({
           </label>
 
           <input
-            type="text"
-            inputMode="numeric"
-            name="amount"
-            value={formattedAmount}
-            onChange={handleChange}
-            placeholder="0"
-            className="w-full"
-          />
-
+  type="text"
+  inputMode="decimal"
+  name="amount"
+  value={form.amount}
+  onChange={handleChange}
+  placeholder="0,00"
+  className="w-full"
+/>
           <button
             type="submit"
             className="w-full mt-4 rounded-2xl bg-black text-white py-3 font-semibold hover:opacity-90 transition"
