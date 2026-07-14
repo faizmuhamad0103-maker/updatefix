@@ -1,0 +1,10 @@
+[00:00:00.518] Server  LOG      ✓ Ready in 325ms
+[00:04:10.511] Server  LOG      ✓ Compiled in 34ms
+[00:04:35.354] Server  LOG      ✓ Compiled in 34ms
+[00:06:33.576] Server  LOG      ✓ Compiled in 37ms
+[00:08:26.624] Server  LOG      ✓ Compiled in 22ms
+[00:08:48.585] Server  LOG      ✓ Compiled in 22ms
+[00:09:07.486] Server  LOG      ✓ Compiled in 21ms
+[00:09:07.620] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? class className
+[00:10:00.351] Server  LOG      ✓ Compiled in 21ms
+[00:11:00.439] Server  LOG      ✓ Compiled in 21ms

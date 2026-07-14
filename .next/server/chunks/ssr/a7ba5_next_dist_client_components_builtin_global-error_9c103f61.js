@@ -1,0 +1,3 @@
+module.exports=[26457,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(16046);a.n(d("[project]/Desktop/moneyKu/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},97451,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(16046);a.n(d("[project]/Desktop/moneyKu/node_modules/next/dist/client/components/builtin/global-error.js"))},60980,a=>{"use strict";a.i(26457);var b=a.i(97451);a.n(b)}];
+
+//# sourceMappingURL=a7ba5_next_dist_client_components_builtin_global-error_9c103f61.js.map

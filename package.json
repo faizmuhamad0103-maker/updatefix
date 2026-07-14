@@ -1,0 +1,24 @@
+{
+  "name": "moneyku",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "dexie": "^4.0.8",
+    "dexie-react-hooks": "^4.4.0",
+    "lucide-react": "^0.542.0",
+    "next": "16.0.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "postcss": "^8.5.19",
+    "tailwindcss": "^4"
+  }
+}
