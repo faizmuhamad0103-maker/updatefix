@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { getWishlists, addWishlist, deleteWishlist, toggleAchieved, updateSavedAmount } from "@/lib/wishlistService";
 import { Check, Trash2, Plus, DollarSign } from "lucide-react";
+import { formatCurrency, parseCurrency } from "@/lib/currency";
 
 export default function Wishlist() {
   const [mounted, setMounted] = useState(false);
@@ -26,8 +27,17 @@ export default function Wishlist() {
 
     await addWishlist({
       name: form.name,
-      targetPrice: Number(form.targetPrice),
-      savedAmount: Number(form.savedAmount) || 0
+      targetPrice: Number(
+        String(form.targetPrice)
+          .replace(/\./g, "")
+          .replace(",", ".")
+      ),
+
+      savedAmount: Number(
+        String(form.savedAmount)
+          .replace(/\./g, "")
+          .replace(",", ".")
+      ) || 0,
     });
 
     setForm({
@@ -38,11 +48,12 @@ export default function Wishlist() {
   }
 
   async function handleAddAmount(id, currentSaved) {
-    const amount = Number(addAmounts[id]) || 0;
-    if (amount > 0) {
-      await updateSavedAmount(id, currentSaved + amount);
-      setAddAmounts(prev => ({ ...prev, [id]: "" }));
-    }
+    const amount =
+      Number(
+        String(addAmounts[id])
+          .replace(/\./g, "")
+          .replace(",", ".")
+      ) || 0;
   }
 
   if (!mounted) return null;
@@ -55,9 +66,9 @@ export default function Wishlist() {
       </div>
 
       <div className="card" style={{ marginBottom: '32px', display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <input style={{ flex: 2, minWidth: '200px' }} type="text" placeholder="Nama Barang/Impian" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
-        <input style={{ flex: 1, minWidth: '150px' }} type="number" placeholder="Target Harga (€)" value={form.targetPrice} onChange={e => setForm({...form, targetPrice: e.target.value})} />
-        <input style={{ flex: 1, minWidth: '150px' }} type="number" placeholder="Terkumpul (€)" value={form.savedAmount} onChange={e => setForm({...form, savedAmount: e.target.value})} />
+        <input style={{ flex: 2, minWidth: '200px' }} type="text" placeholder="Nama Barang/Impian" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+        <input style={{ flex: 1, minWidth: '150px' }} type="text" placeholder="Target Harga (€)" value={form.targetPrice} onChange={e => setForm({ ...form, targetPrice: e.target.value })} />
+        <input style={{ flex: 1, minWidth: '150px' }} type="text" placeholder="Terkumpul (€)" value={form.savedAmount} onChange={e => setForm({ ...form, savedAmount: e.target.value })} />
         <button className="btn-primary" onClick={saveItem}><Plus size={20} /> Tambah</button>
       </div>
 
@@ -65,7 +76,7 @@ export default function Wishlist() {
         {wishlists.map(item => {
           const currentTotal = item.savedAmount || 0;
           const percentage = Math.min(100, Math.round((currentTotal / item.targetPrice) * 100));
-          
+
           return (
             <div key={item.id} className="card" style={{ position: 'relative', opacity: item.achieved ? 0.7 : 1 }}>
               {item.achieved && (
@@ -75,34 +86,35 @@ export default function Wishlist() {
               )}
               <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', textDecoration: item.achieved ? 'line-through' : 'none' }}>{item.name}</h3>
               <p style={{ color: 'var(--primary)', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '10px' }}>
-                € {item.targetPrice.toLocaleString("de-DE")}
+                {formatCurrency(item.targetPrice)}
               </p>
-              
+
               {/* Progress Bar */}
               {!item.achieved && (
                 <div style={{ marginBottom: '20px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '6px', color: 'var(--text-light)' }}>
-                    <span>Terkumpul: € {Math.min(currentTotal, item.targetPrice).toLocaleString("de-DE")}</span>
+                    <span>Terkumpul: {formatCurrency(Math.min(currentTotal, item.targetPrice))}</span>
                     <span>{percentage}%</span>
                   </div>
                   <div style={{ width: '100%', height: '8px', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden', marginBottom: '15px' }}>
-                    <div style={{ 
-                      height: '100%', 
-                      width: `${percentage}%`, 
+                    <div style={{
+                      height: '100%',
+                      width: `${percentage}%`,
                       background: 'var(--green)',
                       transition: 'width 0.5s ease'
                     }}></div>
                   </div>
-                  
+
                   <div style={{ display: 'flex', gap: '10px' }}>
-                    <input 
-                      type="number" 
-                      placeholder="Tambah €" 
-                      value={addAmounts[item.id] || ""} 
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      placeholder="Tambah €"
+                      value={addAmounts[item.id] || ""}
                       onChange={e => setAddAmounts(prev => ({ ...prev, [item.id]: e.target.value }))}
                       style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid var(--border)' }}
                     />
-                    <button 
+                    <button
                       onClick={() => handleAddAmount(item.id, currentTotal)}
                       style={{ background: 'var(--primary)', color: 'white', padding: '8px 12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', border: 'none' }}
                     >
@@ -111,13 +123,13 @@ export default function Wishlist() {
                   </div>
                 </div>
               )}
-              
+
               <div style={{ display: 'flex', gap: '10px', marginTop: item.achieved ? '20px' : '0' }}>
-                <button 
+                <button
                   onClick={() => toggleAchieved(item.id, item.achieved)}
-                  style={{ 
-                    flex: 1, 
-                    background: item.achieved ? 'var(--border)' : 'var(--green)', 
+                  style={{
+                    flex: 1,
+                    background: item.achieved ? 'var(--border)' : 'var(--green)',
                     color: item.achieved ? 'var(--text)' : 'white',
                     padding: '10px',
                     borderRadius: '12px',
@@ -131,7 +143,7 @@ export default function Wishlist() {
                 >
                   <Check size={18} /> {item.achieved ? 'Batal' : 'Tandai Tercapai'}
                 </button>
-                <button 
+                <button
                   onClick={() => deleteWishlist(item.id)}
                   style={{
                     background: 'var(--red)',

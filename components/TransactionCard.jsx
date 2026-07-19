@@ -4,6 +4,7 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
 } from "lucide-react";
+import { formatCurrency } from "@/lib/currency";
 
 export default function TransactionCard({
   transaction,
@@ -13,18 +14,17 @@ export default function TransactionCard({
   const isIncome = transaction.type === "income";
 
   return (
-    
+
     <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
 
       {/* Baris 1 */}
       <div className="flex items-center gap-3">
 
         <div
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-            isIncome
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${isIncome
               ? "bg-emerald-100 text-emerald-600"
               : "bg-rose-100 text-rose-600"
-          }`}
+            }`}
         >
           {isIncome ? (
             <ArrowDownLeft size={20} />
@@ -57,12 +57,11 @@ export default function TransactionCard({
         </span>
 
         <span
-          className={`text-lg font-bold ${
-            isIncome ? "text-emerald-600" : "text-rose-600"
-          }`}
+          className={`text-lg font-bold ${isIncome ? "text-emerald-600" : "text-rose-600"
+            }`}
         >
-          {isIncome ? "+" : "-"}€{" "}
-          {transaction.amount.toLocaleString("de-DE")}
+          {isIncome ? "+" : "-"}
+          {formatCurrency(transaction.amount)}
         </span>
 
       </div>

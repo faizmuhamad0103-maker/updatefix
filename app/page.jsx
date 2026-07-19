@@ -10,6 +10,7 @@ import EmptyState from "@/components/EmptyState";
 import { getTransactions, addTransaction, updateTransaction, deleteTransaction as removeTransaction } from "@/lib/transactionService";
 import { calculateSummary } from "@/lib/summary";
 import { useLiveQuery } from "dexie-react-hooks";
+import { formatCurrency, parseCurrency } from "@/lib/currency";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -31,36 +32,36 @@ export default function Home() {
 
   const transactions = useLiveQuery(() => getTransactions(), []) || [];
 
- async function saveTransaction() {
-  if (!form.date || !form.description || !form.amount) {
-    return;
+  async function saveTransaction() {
+    if (!form.date || !form.description || !form.amount) {
+      return;
+    }
+
+    const payload = {
+      ...form,
+     amount: parseCurrency(form.amount)
+    };
+
+    if (Number.isNaN(payload.amount)) {
+      alert("Nominal tidak valid");
+      return;
+    }
+
+    if (editingId) {
+      await updateTransaction(editingId, payload);
+      setEditingId(null);
+    } else {
+      await addTransaction(payload);
+    }
+
+    setForm({
+      date: "",
+      description: "",
+      category: "Makanan",
+      type: "expense",
+      amount: ""
+    });
   }
-
-  const payload = {
-    ...form,
-    amount: Number(String(form.amount).replace(",", "."))
-  };
-
-  if (Number.isNaN(payload.amount)) {
-    alert("Nominal tidak valid");
-    return;
-  }
-
-  if (editingId) {
-    await updateTransaction(editingId, payload);
-    setEditingId(null);
-  } else {
-    await addTransaction(payload);
-  }
-
-  setForm({
-    date: "",
-    description: "",
-    category: "Makanan",
-    type: "expense",
-    amount: ""
-  });
-}
 
   async function deleteTransaction(id) {
     if (!confirm("Hapus transaksi?")) {
@@ -100,23 +101,20 @@ export default function Home() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginTop: '32px', marginBottom: '32px' }}>
         <SummaryCard
           title="Saldo"
-          amount={`€ ${balance.toLocaleString("de-DE")}`}
+          amount={formatCurrency(balance)}
           color="var(--primary)"
         />
+
         <SummaryCard
           title="Pemasukan"
-          amount={`€ ${income.toLocaleString("de-DE")}`}
+          amount={formatCurrency(income)}
           color="var(--green)"
         />
+
         <SummaryCard
           title="Pengeluaran"
-          amount={`€ ${expense.toLocaleString("de-DE")}`}
+          amount={formatCurrency(expense)}
           color="var(--red)"
-        />
-        <SummaryCard
-          title="Transaksi"
-          amount={filtered.length}
-          color="var(--text)"
         />
       </div>
 
@@ -141,18 +139,18 @@ export default function Home() {
             category={category}
             setCategory={setCategory}
           />
-    
 
-        {filtered.length === 0 ? (
-          <EmptyState />
-        ) : (
-          
-          <TransactionTable
-            transactions={filtered}
-            deleteTransaction={deleteTransaction}
-            editTransaction={editTransaction}
-          />
-        )}
+
+          {filtered.length === 0 ? (
+            <EmptyState />
+          ) : (
+
+            <TransactionTable
+              transactions={filtered}
+              deleteTransaction={deleteTransaction}
+              editTransaction={editTransaction}
+            />
+          )}
         </div>
       </div>
     </main>

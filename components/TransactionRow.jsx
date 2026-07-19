@@ -1,4 +1,5 @@
 import { Pencil, Trash2 } from "lucide-react";
+import { formatCurrency } from "@/lib/currency";
 
 export default function TransactionRow({
   transaction,
@@ -53,35 +54,18 @@ export default function TransactionRow({
 
       <td className="text-right font-semibold text-emerald-600">
 
-        {income > 0
-          ? income.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "IDR",
-              maximumFractionDigits: 0,
-            })
-          : "-"}
+       {income > 0 ? formatCurrency(income) : "-"}
 
       </td>
 
       <td className="text-right font-semibold text-rose-500">
 
-        {expense > 0
-          ? expense.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "IDR",
-              maximumFractionDigits: 0,
-            })
-          : "-"}
-
+        {expense > 0 ? formatCurrency(expense) : "-"}
       </td>
 
       <td className="text-right font-bold text-sky-700">
 
-        {transaction.amount.toLocaleString("de-DE", {
-          style: "currency",
-          currency: "IDR",
-          maximumFractionDigits: 0,
-        })}
+        {formatCurrency(transaction.amount)}
 
       </td>
 
