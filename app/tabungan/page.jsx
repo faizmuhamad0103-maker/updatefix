@@ -43,18 +43,18 @@ export default function Tabungan() {
   return (
     <main className="main-content">
       <div style={{ marginBottom: '32px' }}>
-        <h1 className="header-title">Tabungan</h1>
-        <p className="header-subtitle">Kelola dan pantau target tabunganmu.</p>
+        <h1 className="header-title">Traveling</h1>
+        <p className="header-subtitle">Kelola dan pantau target travelingmu.</p>
       </div>
 
       <div className="card" style={{ marginBottom: '32px', textAlign: 'center', background: 'linear-gradient(135deg, var(--accent), var(--primary))', color: 'white' }}>
-        <h2 style={{ fontSize: '1.2rem', fontWeight: '500', opacity: 0.9 }}>Total Tabungan Saat Ini</h2>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: '500', opacity: 0.9 }}>Total dana traveling Saat Ini</h2>
         <p style={{ fontSize: '2.5rem', fontWeight: '800', margin: '10px 0' }}> {formatCurrency(currentTotal)}</p>
       </div>
 
       <div style={{ overflowY: 'auto', maxHeight: '450px', marginBottom: '15px' }}>
         <div className="card">
-          <h2 style={{ marginBottom: '20px' }}>Catat Tabungan</h2>
+          <h2 style={{ marginBottom: '20px' }}>Catat dana travelingmu</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} />
             <input type="text" placeholder="Keterangan" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
@@ -71,9 +71,9 @@ export default function Tabungan() {
       </div>
       <div>
         <div className="card" style={{ overflowY: 'auto', maxHeight: '450px' }}>
-          <h2 style={{ marginBottom: '20px' }}>Riwayat Tabungan</h2>
+          <h2 style={{ marginBottom: '20px' }}>Riwayat dana travelingmu</h2>
           {savings.length === 0 ? (
-            <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: '40px' }}>Belum ada riwayat tabungan.</p>
+            <p style={{ color: 'var(--muted)', textAlign: 'center', marginTop: '40px' }}>Belum ada riwayat traveling.</p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {savings.map(item => (

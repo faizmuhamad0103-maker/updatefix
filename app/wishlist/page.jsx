@@ -54,6 +54,11 @@ export default function Wishlist() {
           .replace(/\./g, "")
           .replace(",", ".")
       ) || 0;
+      
+    if (amount > 0) {
+      await updateSavedAmount(id, currentSaved + amount);
+      setAddAmounts(prev => ({ ...prev, [id]: "" }));
+    }
   }
 
   if (!mounted) return null;
